@@ -1,4 +1,4 @@
-//import 'express-async-errors';
+import 'express-async-errors';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -8,18 +8,22 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-//import { ZodError } from 'zod';
+import cookieParser from 'cookie-parser';
 
-//import { statusCodes } from './utils/util.js';
 import { routes } from './routes.js';
+import { logger } from '../middleware/logger.js';
+import { errorHandler } from '../middleware/errorHandler.js';
+import corsOptions from '../config/corOptions.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
+app.use(logger);
 app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(routes);
@@ -37,16 +41,6 @@ app.all('*', (req, resp) => {
   }
 });
 
-// app.use((error, req, res, next) => {
-//   if (error instanceof ZodError) {
-//     return res.status(statusCodes.BAD_REQUEST).send('Internal Server Error');
-//   }
-
-//   console.error(error);
-
-//   return res
-//     .status(statusCodes.Internal_Server_Error)
-//     .send('Internal Server Error');
-// });
+app.use(errorHandler);
 
 export { app };
