@@ -11,9 +11,13 @@ import { fileURLToPath } from 'node:url';
 import cookieParser from 'cookie-parser';
 
 import { routes } from './routes.js';
-import { logger } from '../middleware/logger.js';
+import { logEvents, logger } from '../middleware/logger.js';
 import { errorHandler } from '../middleware/errorHandler.js';
 import corsOptions from '../config/corOptions.js';
+import { connectDb } from '../config/dbConnection.js';
+import mongoose from 'mongoose';
+
+await connectDb();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,6 +43,21 @@ app.all('*', (req, resp) => {
   } else {
     return resp.type(txt).send('Not Found.');
   }
+});
+
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB.');
+});
+
+mongoose.connection.on('error', (error) => {
+  const { errno, code, syscall, hostname } = error;
+
+  logEvents(`${errno}\t${code}\t${syscall}\t${hostname}`, 'mongoErrorLog.log');
+
+  console.log(
+    '🚀 ~ file: app.js:53 ~ mongoose.connection.on ~ error:\n',
+    error
+  );
 });
 
 app.use(errorHandler);
