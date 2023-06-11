@@ -37,4 +37,4 @@ noteSchema.plugin(AutoIncrement, {
 
 const Note = mongoose.model('Note', noteSchema);
 
-export { User };
+export { Note };

@@ -11,4 +11,4 @@ routes.get('^/$|index(.html)?', (req, res) => {
   return res.sendFile(path.join(__dirname, '../views', 'index.html'));
 });
 
-export { routes };
+export { routes as rootRoutes };
