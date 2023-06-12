@@ -1,14 +1,14 @@
-import mongoose, { Schema } from 'mongoose';
-import mongoSequence from 'mongoose-sequence';
+import mongoose from 'mongoose';
+import mongooseSequence from 'mongoose-sequence';
 
-const AutoIncrement = mongoSequence(mongoose);
+const AutoIncrement = mongooseSequence(mongoose);
 
-const noteSchema = new Schema(
+const noteSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
       required: true,
+      ref: 'User',
     },
     title: {
       type: String,
@@ -16,9 +16,8 @@ const noteSchema = new Schema(
     },
     text: {
       type: String,
-      default: 'Employee',
+      required: true,
     },
-
     completed: {
       type: Boolean,
       default: false,

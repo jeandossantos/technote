@@ -10,7 +10,7 @@ const getAllNotes = async (req, res) => {
   const notes = await Note.find().lean();
 
   // If no notes
-  if (notes?.length) {
+  if (!notes?.length) {
     return res.json([]);
   }
 
@@ -39,14 +39,20 @@ const createNewNote = async (req, res) => {
   }
 
   // Check for duplicate title
-  const duplicate = await Note.findOne({ title }).lean().exec();
+  const duplicate = await Note.findOne({ title }).lean();
 
   if (duplicate) {
     throw new CustomException('Duplicate note title', 409);
   }
 
   // Create and store the new user
-  await Note.create({ user, title, text });
+  const note = new Note({
+    user,
+    title,
+    text,
+  });
+
+  await note.save();
 
   return res.status(201).json({ message: 'New note created' });
 };
