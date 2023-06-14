@@ -9,9 +9,8 @@ import morgan from 'morgan';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cookieParser from 'cookie-parser';
-import mongoose from 'mongoose';
 
-import { logEvents, logger } from './middleware/logger.js';
+import { logger } from './middleware/logger.js';
 import corsOptions from './config/corOptions.js';
 import { connectDb } from './config/dbConnection.js';
 import { rootRoutes } from './routes/root.js';

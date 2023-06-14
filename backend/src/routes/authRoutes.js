@@ -9,6 +9,6 @@ router.route('/').post(loginLimiter, authController.login);
 
 router.route('/refresh').get(authController.refresh);
 
-router.route('/logout').get(authController.logout);
+router.route('/logout').post(authController.logout);
 
 export { router as authRoutes };
