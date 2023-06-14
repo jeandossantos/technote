@@ -18,7 +18,9 @@
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^6.7.0",
     "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.5.7",
     "mongoose-sequence": "^5.3.1",
     "morgan": "^1.10.0"

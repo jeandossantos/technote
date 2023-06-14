@@ -1,8 +1,11 @@
 import { Router } from 'express';
-
 import * as noteController from '../controllers/noteController.js';
 
+import verifyJWT from '../middleware/verifyJWT.js';
+
 const router = Router();
+
+router.use(verifyJWT);
 
 router
   .route('/')

@@ -18,6 +18,7 @@ import { rootRoutes } from './routes/root.js';
 import { userRoutes } from './routes/userRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { noteRoutes } from './routes/noteRoutes.js';
+import { authRoutes } from './routes/authRoutes.js';
 
 await connectDb();
 
@@ -33,6 +34,7 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(rootRoutes);
+app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/notes', noteRoutes);
 

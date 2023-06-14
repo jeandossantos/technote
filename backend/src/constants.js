@@ -60,8 +60,4 @@ const httpStatus = {
   NETWORK_AUTHENTICATION_REQUIRED: 511,
 };
 
-const status = Object.entries(httpStatus).map((value, index) => {
-  return {};
-});
-
 export { httpStatus };
