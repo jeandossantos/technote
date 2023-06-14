@@ -33,7 +33,7 @@ const login = async function (req, res) {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '1m' }
+    { expiresIn: '15s' }
   );
 
   const refreshToken = jwt.sign(
@@ -70,7 +70,9 @@ const refresh = async function (req, res) {
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
-      if (err) throw new CustomException('Forbidden');
+      if (err) {
+        throw new CustomException('Forbidden');
+      }
 
       const foundUser = await User.findOne({
         username: decoded.username,
